@@ -34,20 +34,32 @@ func MergeSlices(a, b, c []string) []string {
 	i, j, k, l := 0, 0, 0, 0
 
 	answer := make([]string, len(a)+len(b)+len(c))
-	for i < len(a) && j < len(b) && k < len(c) {
+	for ; i < len(a) && j < len(b) && k < len(c); l++ {
 		if a[i] < b[j] && a[i] < c[k] {
 			answer[l] = a[i]
-			l++
 			i++
 		} else if b[j] < a[i] && b[j] < c[k] {
 			answer[l] = b[j]
-			l++
 			j++
 		} else {
 			answer[l] = c[k]
-			l++
 			k++
 		}
+	}
+
+	for i < len(a) {
+		answer[l] = a[i]
+		l++
+	}
+
+	for j < len(b) {
+		answer[l] = b[j]
+		l++
+	}
+
+	for k < len(c) {
+		answer[l] = c[k]
+		l++
 	}
 	return answer
 }
