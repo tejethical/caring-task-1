@@ -13,6 +13,9 @@ func GetSliceChunks(data []string, n int) ([][]string, error) {
 	if len(data) < n {
 		return nil, errors.New("length of slice cannot be less than number of chunks")
 	}
+	if n == 0 {
+		return nil, errors.New("number of chunks cannot be zero")
+	}
 	chunkSize := len(data) / n
 	var chunks [][]string
 	if n == 1 {
@@ -21,7 +24,7 @@ func GetSliceChunks(data []string, n int) ([][]string, error) {
 	for i := 0; i < n; i++ {
 		upperbound := chunkSize * (i + 1)
 		if i == n-1 {
-			upperbound = len(data) - 1
+			upperbound = len(data)
 		}
 		chunks = append(chunks, data[i*chunkSize:upperbound])
 	}
