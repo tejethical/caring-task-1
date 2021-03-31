@@ -1,7 +1,7 @@
 package work
 
 import (
-	tcp_client "caring-task-1/pkgs/tcpNet/client"
+	"caring-task-1/pkgs/tcpNet/client"
 	"log"
 	"sync"
 )
@@ -10,7 +10,7 @@ type WorkPayload struct {
 	Data []string
 }
 
-func AssignWork(clients []tcp_client.Client, chunks [][]string) []WorkPayload {
+func AssignWork(clients []client.Client, chunks [][]string) []WorkPayload {
 	result := make([]WorkPayload, 3)
 	wg := new(sync.WaitGroup)
 	for i := 0; i < 3; i++ {
@@ -19,11 +19,11 @@ func AssignWork(clients []tcp_client.Client, chunks [][]string) []WorkPayload {
 			defer func() {
 				wg.Done()
 			}()
-			err := tcp_client.SendPayload(clients[j], WorkPayload{Data: chunks[j]})
+			err := client.SendPayload(clients[j], WorkPayload{Data: chunks[j]})
 			if err != nil {
 				log.Fatal("Error sending payload to ", clients[j].Addr)
 			}
-			tcp_client.ReadResponse(clients[j], &result[j])
+			client.ReadResponse(clients[j], &result[j])
 		}(i)
 
 	}

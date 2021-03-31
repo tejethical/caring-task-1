@@ -34,8 +34,11 @@ func GetSliceChunks(data []string, n int) ([][]string, error) {
 /*
 Merges three sorted slices of strings into one output sorted slice of strings
 */
-func MergeSlices(a, b, c []string) []string {
+func MergeSlices(a, b, c []string) ([]string, error) {
 
+	if len(a) == 0 && len(b) == 0 && len(c) == 0 {
+		return nil, errors.New("length of all slices can't be zero")
+	}
 	i, j, k, l := 0, 0, 0, 0
 
 	answer := make([]string, len(a)+len(b)+len(c))
@@ -66,5 +69,5 @@ func MergeSlices(a, b, c []string) []string {
 		answer[l] = c[k]
 		l++
 	}
-	return answer
+	return answer, nil
 }

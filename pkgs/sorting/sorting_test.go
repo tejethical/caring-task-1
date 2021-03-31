@@ -1,7 +1,7 @@
 package sorting
 
 import (
-	"github.com/davecgh/go-spew/spew"
+	"reflect"
 	"testing"
 )
 
@@ -32,11 +32,44 @@ func TestGetSliceChunks(t *testing.T) {
 	}
 	totalLen := 0
 	for i := 0; i < n; i++ {
-		spew.Dump(testChunks[i])
 		totalLen += len(testChunks[i])
 	}
 	if totalLen != len(testArr) {
-		spew.Dump(totalLen, testArr)
 		t.Error("total length of generated chunks doesn't match the input array")
 	}
+}
+
+type TestMergeSlicesTable struct {
+	testId int
+	a []string
+	b []string
+	c []string
+	err bool
+	output []string
+	outputLength int
+}
+
+func TestMergeSlices(t *testing.T) {
+	testCases := []TestMergeSlicesTable{
+		{testId: 1, a: []string{}, b: []string{}, c: []string{}, err: true},
+		{testId: 2, a: []string {"abc", "def", "ghi"}, b: []string{}, c: []string{}, err: false, output: []string{"abc", "def", "ghi"}},
+		{testId: 3, a: []string{}, b: []string {"abc", "def", "ghi"}, c: []string{}, err: false, output: []string{"abc", "def", "ghi"}},
+		{testId: 4, a: []string{}, b: []string{}, c: []string {"abc", "def", "ghi"}, err: false, output: []string{"abc", "def", "ghi"}},
+		{testId: 5, a: []string {"abc", "def", "ghi"}, b: []string {"jkl", "mno", "pqr"}, c: []string {"stu", "vwx", "yz"}, err: false, output: []string{"abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"}},
+	}
+
+	for _, testCase := range testCases {
+		res, err := MergeSlices(testCase.a, testCase.b, testCase.c)
+
+		if testCase.err {
+			if err == nil {
+				t.Error("func should return an error")
+			}
+		} else {
+			if !reflect.DeepEqual(testCase.output, res) {
+				t.Errorf("Test # %d failed. Expected: %v, Returned: %v", testCase.testId, testCase.output, res)
+			}
+		}
+	}
+
 }

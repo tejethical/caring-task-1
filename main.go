@@ -36,7 +36,11 @@ func main() {
 
 		result := work.AssignWork(clients, chunks)
 
-		sortedSlice := sorting.MergeSlices(result[0].Data, result[1].Data, result[2].Data)
+		sortedSlice, err := sorting.MergeSlices(result[0].Data, result[1].Data, result[2].Data)
+
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		fmt.Println(sortedSlice)
 		break
