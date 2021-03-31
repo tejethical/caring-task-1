@@ -1,7 +1,7 @@
 package work
 
 import (
-	tcp_client "caring-task-1/pkgs/tcp-net/client"
+	tcp_client "caring-task-1/pkgs/tcpNet/client"
 	"log"
 	"sync"
 )

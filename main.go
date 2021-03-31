@@ -2,10 +2,10 @@ package main
 
 import (
 	"caring-task-1/lib"
-	cli_args "caring-task-1/pkgs/cli-args"
+	"caring-task-1/pkgs/cliArgs"
 	"caring-task-1/pkgs/sorting"
-	tcp_client "caring-task-1/pkgs/tcp-net/client"
-	"caring-task-1/pkgs/tcp-net/server"
+	"caring-task-1/pkgs/tcpNet/client"
+	"caring-task-1/pkgs/tcpNet/server"
 	"caring-task-1/pkgs/work"
 	"fmt"
 	"log"
@@ -15,11 +15,11 @@ import (
 var workerPorts = []string{"91", "92", "93"}
 
 func main() {
-	args := cli_args.Get()
+	args := cliArgs.Get()
 	switch args.Role {
 	case "master":
 
-		clients, err := tcp_client.GetClients(workerPorts)
+		clients, err := client.GetClients(workerPorts)
 		if err != nil {
 			log.Fatal("Error connecting to workers: ", err)
 		}

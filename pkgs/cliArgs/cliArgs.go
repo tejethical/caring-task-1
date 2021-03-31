@@ -1,4 +1,4 @@
-package cli_args
+package cliArgs
 
 import (
 	"log"

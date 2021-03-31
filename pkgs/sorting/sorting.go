@@ -1,6 +1,8 @@
 package sorting
 
-import "errors"
+import (
+	"errors"
+)
 
 /*
 Subdivides input slice into smaller chunks
@@ -47,17 +49,17 @@ func MergeSlices(a, b, c []string) []string {
 		}
 	}
 
-	for i < len(a) {
+	for ; i < len(a); i++ {
 		answer[l] = a[i]
 		l++
 	}
 
-	for j < len(b) {
+	for ; j < len(b); j++ {
 		answer[l] = b[j]
 		l++
 	}
 
-	for k < len(c) {
+	for ; k < len(c); k++ {
 		answer[l] = c[k]
 		l++
 	}
